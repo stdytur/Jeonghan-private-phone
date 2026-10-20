@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEVENTEEN PRIVATE PHONE</title>
+<style>
+:root{--ink:#292630;--muted:#827d89;--paper:#fbf8f5;--lav:#e9e2f2;--line:#e8e2e8;--blue:#9fc5f5;--pink:#f4dce5}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 10%,#f2e6ef 0,transparent 32%),radial-gradient(circle at 90% 80%,#dce7f3 0,transparent 30%),#f5f1ed;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;padding:24px}
+button{font:inherit;cursor:pointer}
+.phone{width:min(390px,100%);height:min(820px,calc(100vh - 32px));min-height:620px;border:8px solid #28262b;border-radius:48px;overflow:hidden;background:#f8f6f8;box-shadow:0 28px 80px #51445c35;position:relative}
+.status{height:38px;padding:12px 24px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:700;position:absolute;top:0;left:0;right:0;z-index:5;color:#26232b}
+.island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:92px;height:24px;background:#17161a;border-radius:20px;z-index:6}
+.screen{height:100%;overflow:auto;display:none;padding:52px 17px 30px;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.active{display:block}
+.wallpaper{background:linear-gradient(155deg,#c9d6d2 0%,#e9dfeb 45%,#f7e9e2 100%);position:relative}
+.wallpaper:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,#ffffff80,transparent 25%),radial-gradient(ellipse at 20% 70%,#b3c5bb80,transparent 40%);pointer-events:none}
+.home-content{position:relative;z-index:1}
+.date{text-align:center;font-size:13px;letter-spacing:2px;margin-top:24px;color:#4f4a58}
+.big-clock{text-align:center;font-size:66px;font-weight:200;letter-spacing:-4px;margin:0 0 26px}
+.widget{background:#ffffff8a;backdrop-filter:blur(12px);border:1px solid #ffffff9c;border-radius:20px;padding:13px 15px;margin:0 2px 26px}
+.widget small{color:#716978;letter-spacing:1.3px;font-size:9px}
+.widget h2{font-family:Georgia,serif;font-weight:400;font-size:19px;margin:5px 0}
+.widget p{font-size:11px;color:#5e5865;margin:0}
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 8px;margin:0 0 25px}
+.app{border:0;background:none;padding:0;color:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.app-icon{height:53px;width:53px;border-radius:15px;display:grid;place-items:center;font-size:25px;box-shadow:0 4px 9px #4b405018}
+.app span:last-child{font-size:10px;text-shadow:0 1px 3px #fff9}
+.messages{background:#d8e6fa}.photos{background:linear-gradient(135deg,#f8d8dc,#fff1c8,#d8e8da,#d7e5fa)}.notes{background:#fff0b8}.contacts{background:#e0d8f6}.social{background:linear-gradient(135deg,#f7c5d6,#f5e7bd,#b8d8f5)}.settings{background:#e8e6e9}
+.dock{display:flex;justify-content:space-around;padding:11px 9px;background:#ffffff70;backdrop-filter:blur(15px);border:1px solid #ffffffa6;border-radius:23px;margin-top:3px}
+.dock .app-icon{height:48px;width:48px}
+.page-head{display:flex;align-items:center;gap:12px;margin:7px 0 20px}
+.back{border:0;background:#ebe7ee;border-radius:50%;width:36px;height:36px;font-size:22px;color:#4a4351}
+.page-head h1{font-size:24px;margin:0;letter-spacing:-.7px}
+.sub{font-size:12px;color:var(--muted);margin:4px 0 0}
+.card{background:white;border:1px solid #eee8ef;border-radius:18px;padding:14px;margin-bottom:11px}
+.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#93899b}
+.person{display:flex;align-items:center;gap:11px;width:100%;border:0;text-align:left;background:white;padding:12px;border-radius:15px;margin-bottom:8px;color:inherit}
+.avatar{width:43px;height:43px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--lav);font-size:19px}
+.person strong{display:block;font-size:13px}.person small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.person .time{margin-left:auto;font-size:10px;color:#9b93a1}
+.chat-top{display:flex;align-items:center;gap:9px;padding:8px 0 13px;border-bottom:1px solid var(--line);margin-bottom:15px}
+.chat-top .avatar{width:37px;height:37px}.chat-top strong{font-size:13px}
+.bubbles{display:flex;flex-direction:column;gap:9px;min-height:300px}
+.bubble{max-width:82%;font-size:13px;line-height:1.45;padding:10px 13px;border-radius:17px;white-space:pre-wrap;overflow-wrap:anywhere}
+.bubble.them{background:#e9e6ed;align-self:flex-start;border-bottom-left-radius:5px}
+.bubble.me{background:#b9d5f8;align-self:flex-end;border-bottom-right-radius:5px}
+.chat-time{text-align:center;font-size:10px;color:#a29aa5;margin:8px 0 13px}
+.chat-compose{display:flex;gap:7px;margin-top:15px}
+.chat-compose input,.note-editor,.caption-input{width:100%;border:1px solid var(--line);border-radius:13px;padding:11px;background:white;font:inherit;font-size:13px;color:var(--ink)}
+.chat-compose button,.primary{border:0;background:#9fc5f5;color:#26374d;border-radius:13px;padding:0 14px;font-weight:600}
+.photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.photo{border:0;padding:0;background:#e5e1e7;border-radius:14px;overflow:hidden;text-align:left;color:inherit}
+.photo-art{height:128px;display:grid;place-items:center;font-size:43px;background:linear-gradient(145deg,#d6e3dc,#eee1ed,#f6e4d9)}
+.photo:nth-child(2) .photo-art{background:linear-gradient(145deg,#d5dff1,#f3dce3)}.photo:nth-child(3) .photo-art{background:linear-gradient(145deg,#e7d9c7,#d5e2d5)}.photo:nth-child(4) .photo-art{background:linear-gradient(145deg,#d4e5f2,#e6d9ed)}
+.photo small{display:block;padding:9px 10px;background:#fff;font-size:11px}
+.note-item{display:block;width:100%;border:0;background:#fff;border-radius:15px;padding:14px;text-align:left;margin-bottom:9px;color:inherit}
+.note-item strong{font-size:13px;display:block}.note-item small{color:var(--muted);font-size:10px;display:block;margin:5px 0}.note-item p{font-size:12px;line-height:1.5;margin:0;color:#5d5764}
+.note-editor{min-height:200px;resize:vertical;line-height:1.6}
+.action-row{display:flex;gap:8px;margin:10px 0 16px}
+.action-row button{padding:10px 12px;border-radius:12px;border:0;background:#ebe6ef;color:#433b4c;font-size:12px}
+.post{background:white;border:1px solid #eee8ef;border-radius:17px;padding:13px;margin-bottom:13px}
+.post-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}.post-head .avatar{width:35px;height:35px}.post-head strong{font-size:12px}.post-head small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.post-art{height:165px;border-radius:12px;background:linear-gradient(145deg,#e8d8e6,#d9e6ed,#f3e5d9);display:grid;place-items:center;font-size:48px;margin-bottom:10px}
+.post p{font-size:12px;line-height:1.5;margin:8px 0}.likes{font-size:11px;color:#8d7188}
+.edit-hint{font-size:11px;color:#8a818e;line-height:1.5;margin:16px 2px}
+.toast{position:absolute;bottom:25px;left:50%;transform:translateX(-50%);background:#292630;color:white;padding:10px 14px;border-radius:20px;font-size:12px;display:none;z-index:10;white-space:nowrap}
+@media(max-width:430px){body{padding:0;background:#f8f6f8}.phone{width:100%;height:100dvh;min-height:580px;border:0;border-radius:0;box-shadow:none}.island{top:8px}.screen{padding-top:53px}}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="island"></div>
+  <div class="status"><span id="statusTime">9:41</span><span>●●●  ▰</span></div>
+
+  <section class="screen active wallpaper" id="home">
+    <div class="home-content">
+      <div class="date" id="homeDate">MONDAY, OCTOBER 20</div>
+      <div class="big-clock" id="homeClock">09:41</div>
+      <div class="widget">
+        <small>YOUR LITTLE UNIVERSE</small>
+        <h2 id="widgetName">Choi Seungcheol's phone</h2>
+        <p>somewhere between schedules & home ♡</p>
+      </div>
+      <div class="app-grid">
+        <button class="app" onclick="openApp('messages')"><span class="app-icon messages">☏</span><span>Messages</span></button>
+        <button class="app" onclick="openApp('photos')"><span class="app-icon photos">🌈</span><span>Photos</span></button>
+        <button class="app" onclick="openApp('notes')"><span class="app-icon notes">📝</span><span>Notes</span></button>
+        <button class="app" onclick="openApp('contacts')"><span class="app-icon contacts">👤</span><span>Contacts</span></button>
+        <button class="app" onclick="openApp('social')"><span class="app-icon social">◎</span><span>Social</span></button>
+        <button class="app" onclick="showToast('More apps coming soon ♡')"><span class="app-icon settings">⚙</span><span>Settings</span></button>
+      </div>
+      <div class="dock">
+        <button class="app" onclick="openApp('contacts')"><span class="app-icon contacts">☎</span></button>
+        <button class="app" onclick="openApp('messages')"><span class="app-icon messages">✉</span></button>
+        <button class="app" onclick="openApp('photos')"><span class="app-icon photos">🌼</span></button>
+        <button class="app" onclick="openApp('social')"><span class="app-icon social">◎</span></button>
+      </div>
+      <p class="edit-hint" style="text-align:center;color:#625b68">tap an app to explore ♡</p>
+    </div>
+  </section>
+
+  <section class="screen" id="messages">
+    <div class="page-head"><button class="back" onclick="goHome()">‹</button><div><h1>Messages</h1><p class="sub">little conversations, big feelings</p></div></div>
+    <div id="chatList"></div>
+    <p class="edit-hint">To change the story, edit the <b>STORY DATA</b> section near the bottom of this file.</p>
+  </section>
+
+  <section class="screen" id="chat">
+    <div class="page-head"><button class="back" onclick="openApp('messages')">‹</button><div><h1 id="chatTitle">Chat</h1><p class="sub">iMessage · fictional conversation</p></div></div>
+    <div class="chat-top"><div class="avatar" id="chatAvatar">🍒</div><div><strong id="chatName">Character</strong><div class="sub">available in your universe</div></div></div>
+    <div class="chat-time">TODAY</div>
+    <div class="bubbles" id="bubbles"></div>
+    <form class="chat-compose" id="chatForm"><input id="chatInput" placeholder="iMessage" autocomplete="off"><button type="submit">↑</button></form>
+  </section>
+
+  <section class="screen" id="photos">
+    <div class="page-head"><button class="back" onclick="goHome()">‹</button><div><h1>Photos</h1><p class="sub">little things worth keeping</p></div></div>
+    <div class="eyebrow" style="margin:0 0 12px">RECENTS · 4 ITEMS</div>
+    <div class="photo-grid" id="photoGrid"></div>
+    <p class="edit-hint">These are placeholder illustrations. Replace them with your own image URLs in the STORY DATA section.</p>
+  </section>
+
+  <section class="screen" id="notes">
+    <div class="page-head"><button class="back" onclick="goHome()">‹</button><div><h1>Notes</h1><p class="sub">things he never said out loud</p></div></div>
+    <div id="notesList"></div>
+    <div class="card" id="noteEditorWrap" style="display:none">
+      <input id="noteTitle" class="caption-input" placeholder="Note title">
+      <textarea id="noteBody" class="note-editor" placeholder="Write something..."></textarea>
+      <div class="action-row"><button onclick="saveNote()">Save note</button><button onclick="cancelNote()">Cancel</button></div>
+    </div>
+    <div class="action-row"><button onclick="newNote()">＋ New note</button></div>
+  </section>
+
+  <section class="screen" id="contacts">
+    <div class="page-head"><button class="back" onclick="goHome()">‹</button><div><h1>Contacts</h1><p class="sub">people in his orbit</p></div></div>
+    <div id="contactList"></div>
+  </section>
+
+  <section class="screen" id="social">
+    <div class="page-head"><button class="back" onclick="goHome()">‹</button><div><h1>Social</h1><p class="sub">a fictional little feed</p></div></div>
+    <div id="socialFeed"></div>
+    <p class="edit-hint">This is a fictional feed for your AU, not a real social media account.</p>
+  </section>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+// ======================= STORY DATA =======================
+// Change names, messages, notes, captions and emojis here.
+// For photos, put an image URL in "image" (or leave it empty for an emoji placeholder).
+const story = {
+  owner: "Choi Seungcheol",
+  contacts: [
+    {name:"Jeonghan", nickname:"Yoon Jeonghan", emoji:"😇", last:"you owe me coffee", time:"9:32"},
+    {name:"Joshua", nickname:"Hong Jisoo", emoji:"🦌", last:"sent you a photo", time:"8:54"},
+    {name:"Mingyu", nickname:"Kim Mingyu", emoji:"🐶", last:"HYUNG LOOK AT THIS", time:"Yesterday"},
+    {name:"You", nickname:"Your character", emoji:"♡", last:"are you home yet?", time:"Yesterday"}
+  ],
+  chats: {
+    "Jeonghan":[
+      {from:"them",text:"you left your hoodie here again"},
+      {from:"me",text:"keep it for me?"},
+      {from:"them",text:"what am i, your closet 😐"},
+      {from:"me",text:"my favorite closet"},
+      {from:"them",text:"you're so annoying"}
+    ],
+    "Joshua":[
+      {from:"them",text:"sent you a photo"},
+      {from:"me",text:"why do you take pictures of everything"},
+      {from:"them",text:"because you never look at the sky"}
+    ],
+    "Mingyu":[
+      {from:"them",text:"HYUNG LOOK AT THIS"},
+      {from:"them",text:"i made dinner"},
+      {from:"me",text:"is the kitchen still standing"},
+      {from:"them",text:"?????"}
+    ],
+    "You":[
+      {from:"me",text:"are you home yet?"},
+      {from:"them",text:"just got in the car"},
+      {from:"me",text:"okay. text me when you're home"},
+      {from:"them",text:"you always wait up for me"},
+      {from:"me",text:"always."}
+    ]
+  },
+  photos:[
+    {caption:"late afternoon light",date:"OCT 18",emoji:"🌇",image:""},
+    {caption:"the practice room",date:"OCT 16",emoji:"🎧",image:""},
+    {caption:"coffee, untouched",date:"OCT 14",emoji:"☕",image:""},
+    {caption:"someone's blurry sleeve",date:"OCT 12",emoji:"🌿",image:""}
+  ],
+  notes:[
+    {title:"things to remember",date:"Today",body:"buy milk\ncall eomma\nremember to breathe"},
+    {title:"unsent",date:"Yesterday",body:"some days i wish the world would be quiet enough for us to hear ourselves think."},
+    {title:"for later",date:"Oct 12",body:"the little things are the big things. don't forget that."}
+  ],
+  posts:[
+    {name:"sound_of_coups",emoji:"🍒",time:"2h ago",caption:"a quiet day, finally. ♡",art:"🌆",likes:12804},
+    {name:"joshuahong",emoji:"🦌",time:"Yesterday",caption:"found a little bit of peace between schedules.",art:"☁️",likes:9862},
+    {name:"min9yu_k",emoji:"🐶",time:"2 days ago",caption:"chef kim reporting for duty 🍳",art:"🍜",likes:17320}
+  ]
+};
+// ===================== END STORY DATA =====================
+
+let currentChat = null;
+let editingNote = -1;
+let notes = story.notes.map(n=>({...n}));
+const $ = id => document.getElementById(id);
+function openApp(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');$(id).scrollTop=0;if(id==='messages')renderChats();if(id==='photos')renderPhotos();if(id==='notes')renderNotes();if(id==='contacts')renderContacts();if(id==='social')renderSocial();}
+function goHome(){openApp('home')}
+function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',1800)}
+function renderChats(){
+  $('chatList').innerHTML=story.contacts.map(c=>`<button class="person" onclick="openChat('${esc(c.name)}')"><span class="avatar">${c.emoji}</span><span style="min-width:0;flex:1"><strong>${esc(c.name)}</strong><small>${esc(c.last)}</small></span><span class="time">${esc(c.time)}</span></button>`).join('');
+}
+function openChat(name){
+ currentChat=name;const c=story.contacts.find(x=>x.name===name);$('chatTitle').textContent=name;$('chatName').textContent=c?c.nickname:name;$('chatAvatar').textContent=c?c.emoji:'♡';
+ const messages=story.chats[name]||[];
+ $('bubbles').innerHTML=messages.map(m=>`<div class="bubble ${m.from==='me'?'me':'them'}">${esc(m.text)}</div>`).join('');
+ openApp('chat');$('bubbles').scrollTop=$('bubbles').scrollHeight;
+}
+$('chatForm').addEventListener('submit',e=>{e.preventDefault();const input=$('chatInput');const val=input.value.trim();if(!val)return;story.chats[currentChat]=story.chats[currentChat]||[];story.chats[currentChat].push({from:'me',text:val});$('bubbles').insertAdjacentHTML('beforeend',`<div class="bubble me">${esc(val)}</div>`);input.value='';});
+function renderPhotos(){$('photoGrid').innerHTML=story.photos.map(p=>`<div class="photo"><div class="photo-art" ${p.image?`style="background-image:url('${esc(p.image)}');background-size:cover;background-position:center"`:''}>${p.image?'':p.emoji}</div><small>${esc(p.caption)} <span style="float:right;color:#9a919d">${esc(p.date)}</span></small></div>`).join('')}
+function renderNotes(){$('notesList').innerHTML=notes.map((n,i)=>`<button class="note-item" onclick="editNote(${i})"><strong>📝 ${esc(n.title)}</strong><small>${esc(n.date)}</small><p>${esc(n.body).replace(/\n/g,'<br>')}</p></button>`).join('')}
+function newNote(){editingNote=-1;$('noteTitle').value='';$('noteBody').value='';$('noteEditorWrap').style.display='block';$('noteTitle').focus()}
+function editNote(i){editingNote=i;$('noteTitle').value=notes[i].title;$('noteBody').value=notes[i].body;$('noteEditorWrap').style.display='block';$('noteTitle').focus()}
+function saveNote(){const title=$('noteTitle').value.trim()||'untitled';const body=$('noteBody').value.trim();if(editingNote<0)notes.unshift({title,date:'Just now',body});else notes[editingNote]={title,date:'Just now',body};$('noteEditorWrap').style.display='none';renderNotes();showToast('Note saved on this page ♡')}
+function cancelNote(){$('noteEditorWrap').style.display='none'}
+function renderContacts(){$('contactList').innerHTML=story.contacts.map(c=>`<button class="person" onclick="openChat('${esc(c.name)}')"><span class="avatar">${c.emoji}</span><span style="flex:1"><strong>${esc(c.nickname)}</strong><small>${esc(c.name==='You'?'favorite person':'SEVENTEEN · contact')}</small></span><span style="color:#9b91a5">›</span></button>`).join('')}
+function renderSocial(){$('socialFeed').innerHTML=story.posts.map(p=>`<article class="post"><div class="post-head"><span class="avatar">${p.emoji}</span><span><strong>${esc(p.name)}</strong><small>${esc(p.time)}</small></span><span style="margin-left:auto;color:#aaa">•••</span></div><div class="post-art">${p.art}</div><div class="likes">♡ ${Number(p.likes).toLocaleString()} likes</div><p><b>${esc(p.name)}</b> ${esc(p.caption)}</p></article>`).join('')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function updateClock(){const d=new Date();$('statusTime').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',hour12:false});$('homeClock').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',hour12:false});$('homeDate').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}).toUpperCase()}
+$('widgetName').textContent=story.owner+"'s phone";
+updateClock();renderChats();renderPhotos();renderNotes();renderContacts();renderSocial();
+</script>
+</body>
+</html>
